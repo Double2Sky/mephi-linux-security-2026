@@ -1,0 +1,30 @@
+    1  groupadd students
+    2  useradd -m -u 1234 -G students user1
+    3  passwd user1
+    4  chage -M 90 user1
+    5  id user1
+    6  chage -l user1
+    7  find / -type f -perm -4000 2>/dev/null
+    8  find / -type f -perm -4000 2>/dev/null > /home/user1/setuid-files.out
+    9  ps -eo pid,ruid,euid,user,comm | awk '$2>=1000 && $3==0'
+   10  ps -eo pid,ruid,euid,user,comm | awk '$2>=1000 && $3==0' > /home/user1/processes.out
+   11  cp /usr/bin/cat /home/user1/cat-su
+   12  chown root:root /home/user1/cat-su
+   13  chmod 4755 /home/user1/cat-su
+   14  ls -l /home/user1/cat
+   15  ls -l /home/user1/cat-su
+   16  su - user1
+   17  cp /usr/bin/chown /home/user1/chown-su
+   18  chown root:root /home/user1/chown-su
+   19  chmod 755 /home/user1/chown-su
+   20  setcap cap_chown+ep /home/user1/chown-su
+   21  getcap /home/user1/chown-su
+   22  su - user1
+   23  echo 'user1 ALL=(root) /usr/bin/date -s *' > /etc/sudoers.d/user1-time
+   24  chmod 440 /etc/sudoers.d/user1-time
+   25  visudo -c
+   26  stat /home/user1 > /home/user1/stat.out
+   27  stat /home/user1/cat-su >> /home/user1/stat.out
+   28  stat /home/user1/chown-su >> /home/user1/stat.out
+   29  getcap /home/user1/chown-su > /home/user1/getcap.out
+   30  history > /home/user1/history.out
